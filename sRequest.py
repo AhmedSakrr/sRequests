@@ -4,11 +4,12 @@ import socket, ssl
 from urllib.parse import urlparse
 
 class Structure:
-    def __init__(self, headers, status_code, redirects, text):
+    def __init__(self, headers, status_code, redirects, text, url):
         self.headers = headers
         self.status_code = status_code
         self.redirects = redirects
         self.text = text
+        self.url = url
 
 class Elcap():
     default_headers = {
@@ -26,6 +27,7 @@ class Elcap():
         self.headers = {}
         self.history = []
         self.redirects = 0
+        self.con_header = ''
         self.status_code = ''
         self.encoding = 'ISO-8859-1'
 
@@ -60,9 +62,9 @@ class Elcap():
     def resp_analyz(self):
         try:
             if '301' in self.status_code:
-                self.history.append(Structure(self.headers, self.status_code, self.redirects, self.text))
+                self.history.append(Structure(self.headers, self.status_code, self.redirects, self.text, self.url))
                 self.redirects += 1
-                self.get(self.headers['Location'], self.full, self.read, self.encoding, self.headers)
+                self.get(self.headers['Location'], self.full, self.read, self.encoding, self.con_header)
         except:
             pass
 
@@ -111,7 +113,7 @@ class Elcap():
         self.full = full
         self.read = read
         self.encoding = encoding
-        self.headers = headers
+        self.con_header = headers
     
         url = urlparse(url)
         _tmp = self.format_request(url.netloc, url.path, headers)
@@ -121,9 +123,11 @@ class Elcap():
         elif url.scheme == 'https':
             data = self.https(url, _tmp)
 
-        self.headers, self.text = data.split('\r\n\r\n')
-        self.format_dict(self.headers)
+        data = data.split('\r\n\r\n')
+        self.headers = data[0]
+        self.text = data[1]
 
+        self.format_dict(self.headers)
         self.resp_analyz()
-        
+
         return self
