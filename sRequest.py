@@ -61,7 +61,7 @@ class Elcap():
 
     def resp_analyz(self):
         try:
-            if '301' in self.status_code:
+            if '301' in self.status_code or '302' in self.status_code:
                 self.history.append(Structure(self.headers, self.status_code, self.redirects, self.text, self.url))
                 self.redirects += 1
                 self.get(self.headers['Location'], self.full, self.read, self.encoding, self.con_header)
