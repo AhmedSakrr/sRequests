@@ -21,33 +21,35 @@ Inspired by [Requests](https://github.com/requests/requests)
    - con_header - request headers
    - history - contains all redirects history with objects
    
-  # Example
-  
-  ### GET
-  ``` python
-  from sRequest import Elcap
-  
-  r = Elcap().get('http://python.org')
-  
-  print(r.text) # returned html code
-  print(r.redirects) # returned 2 (redirects count)
-  print(r.history[0].status_code) # 301 Moved Permanently
-  print(r.status_code) # 200 OK
-  print(r.url) # https://www.python.org/
+ 
+# Example
+
+### GET
+``` python
+# -*- coding: utf-8 -*-
+from sRequest import Elcap
+
+r = Elcap().get('http://python.org')
+
+print(r.text) # returned html code
+print(r.redirects) # returned 2 (redirects count)
+print(r.history[0].status_code) # 301 Moved Permanently
+print(r.status_code) # 200 OK
+print(r.url) # https://www.python.org/
 ```
 
 ### POST
 ``` python
-   # -*- coding: utf-8 -*-
-   from sRequest import Elcap
+# -*- coding: utf-8 -*-
+from sRequest import Elcap
 
-   headers = {'Test': 'Yes'}
-   params = {'user': 'TheDev'}
+headers = {'Test': 'Yes'}
+params = {'user': 'TheDev'}
 
-   request = Elcap()
-   request.headers_update('post', headers)
-   r = request.post('https://httpbin.org/post', data=params)
+request = Elcap()
+request.headers_update('post', headers)
+r = request.post('https://httpbin.org/post', data=params)
 
-   print(r.text) # return json answer
-   print(r.status_code) #200 OK
+print(r.text) # return json answer
+print(r.status_code) #200 OK
 ```
