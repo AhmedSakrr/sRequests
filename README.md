@@ -2,14 +2,13 @@
 Simple Python 3 library to make HTTP requests. Based on socket.
 
 # About
-sRequest - simple library to make HTTP requests fully based on socket. In theory must work on all platforms by default.
-Inspired by [Requests](https://github.com/requests/requests)
+sRequest - simple library to make HTTP requests fully based on socket. Inspired by [Requests](https://github.com/requests/requests)
 
 
 - Based on default Python library
 - SSL/TSL support
 - Custom headers support
-- HTTP 1.01 protocol in use
+- HTTP 1.1 protocol in use
 - GET/POST requests support
 - Have history of redirects
 - Objects:
