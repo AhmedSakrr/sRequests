@@ -9,7 +9,8 @@ Inspired by [Requests](https://github.com/requests/requests)
 - Based on default Python library
 - SSL/TSL support
 - Custom headers support
-- HTTP 1.0 protocol in use
+- HTTP 1.01 protocol in use
+- GET/POST requests support
 - Have history of redirects
 - Objects:
 
@@ -21,6 +22,8 @@ Inspired by [Requests](https://github.com/requests/requests)
    - history - contains all redirects history with objects
    
   # Example
+  
+  ### GET
   ``` python
   from sRequest import Elcap
   
@@ -28,7 +31,23 @@ Inspired by [Requests](https://github.com/requests/requests)
   
   print(r.text) # returned html code
   print(r.redirects) # returned 2 (redirects count)
-  print(r.history[0].status_code) # HTTP/1.1 301 Moved Permanently
-  print(r.status_code) # HTTP/1.1 200 OK
+  print(r.history[0].status_code) # 301 Moved Permanently
+  print(r.status_code) # 200 OK
   print(r.url) # https://www.python.org/
+```
+
+### POST
+``` python
+   # -*- coding: utf-8 -*-
+   from sRequest import Elcap
+
+   headers = {'Test': 'Yes'}
+   params = {'user': 'TheDev'}
+
+   request = Elcap()
+   request.headers_update('post', headers)
+   r = request.post('https://httpbin.org/post', data=params)
+
+   print(r.text) # return json answer
+   print(r.status_code) #200 OK
 ```
